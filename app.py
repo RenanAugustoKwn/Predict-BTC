@@ -19,8 +19,17 @@ st.divider()
 # Input do usuário
 ano = st.number_input("Digite o ano do Bitcoin:", min_value=2000, max_value=2100, step=1, format="%d")
 
+csv_ano_array = df[["ANO"]].values
+
+# Verificar se o ano está no DataFrame
+if ano in df["ANO"].values:
+    predict_dolar = df.loc[df["ANO"] == ano, "DOLAR"].values[0]  # Obtém o valor real do CSV
+    st.write(f"O Valor do Bitcoin no ano de {ano} foi de **${predict_dolar:.2f}** (dado real)")
+
 # Fazer previsão quando o usuário inserir um ano
-if ano:
+else:
     ano_array = [[ano]]  # Corrigido: Transformando em um array 2D
     predict_dolar = modelo.predict(ano_array)[0][0]  # Obtendo o valor escalar
-    st.write(f"O Valor do Bitcoin no ano de {ano} será de **R${predict_dolar:.2f}**")
+    if predict_dolar < 0:
+        predict_dolar = 0
+    st.write(f"O Valor do Bitcoin no ano de {ano} será de **${predict_dolar:.2f}**")
