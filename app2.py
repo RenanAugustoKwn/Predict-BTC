@@ -16,6 +16,7 @@ def carregar_dados(empresa):
     return cotacoes_acao
 
 
+# Carrega dados do CSV IBOV
 @st.cache_data
 def carregar_tickers_acoes():
     base_ticker = pd.read_csv("IBOV.csv", sep=";")
@@ -53,7 +54,30 @@ intervalo_data = st.sidebar.slider(
 
 ## Data seleionada pelo Usuario
 dados = dados.loc[intervalo_data[0] : intervalo_data[1]]
+
 st.write(""" # Gráfico com as acoes escolhidas""")
 
 if lista_acoes:
     st.line_chart(dados)
+
+
+texto_performace_ativos = ""
+
+if len(lista_acoes) == 0:
+    lista_acoes = list(dados.columns)
+elif len(lista_acoes) == 1:
+    dados = dados.rename(columns={"Close": acao_unica})
+
+for acoes in lista_acoes:
+    performace_ativo = dados[acoes].iloc[-1] / dados[acoes].iloc[0] - 1
+    performace_ativo = float(performace_ativo)
+    texto_performace_ativos = (
+        texto_performace_ativos + f"  \n{acoes}: {performace_ativo:.1%}"
+    )
+
+st.write(f"""
+         ### Performace dos Ativos 
+         Essa foi a perfomace de cada ativo no período selecionado:
+
+         {texto_performace_ativos}
+         """)
