@@ -16,7 +16,16 @@ def carregar_dados(empresa):
     return cotacoes_acao
 
 
-acoes = ["ITUB4.SA", "PETR4.SA", "MGLU3.SA"]
+@st.cache_data
+def carregar_tickers_acoes():
+    base_ticker = pd.read_csv("IBOV.csv", sep=";")
+    tickers = list(base_ticker["Código"])
+    tickers = [item + ".SA" for item in tickers]
+    return tickers
+
+
+acoes = carregar_tickers_acoes()
+print(acoes)
 dados = carregar_dados(acoes)
 
 

@@ -3,7 +3,7 @@ import streamlit as st
 from sklearn import linear_model
 
 # Carregar dados
-df = pd.read_csv("PlanilhaBTC.CSV", sep=";")
+df = pd.read_csv("PlanilhaBTC.csv", sep=";")
 
 # Criar e treinar o modelo
 modelo = linear_model.LinearRegression()
