@@ -11,7 +11,8 @@ dependencies = [
     "pandas (>=2.2.3,<3.0.0)",
     "scikit-learn (>=1.6.1,<2.0.0)",
     "streamlit (>=1.41.1,<2.0.0)",
-    "matplotlib (>=3.10.0,<4.0.0)"
+    "matplotlib (>=3.10.0,<4.0.0)",
+    "yfinance (>=0.2.52,<0.3.0)"
 ]
 
 
